@@ -1,109 +1,76 @@
 import random
 
-def game_logic():
 
-  user_option = input('''Elije entre:
+def choose_options():
+  options = ('piedra', 'papel', 'tijera')
+  user_option = input('piedra, papel o tijera => ')
+  user_option = user_option.lower()
 
-  1) Piedra
+  if not user_option in options:
+    print('esa opcion no es valida')
+    # continue
+    return None, None
 
-  2) Papel
+  computer_option = random.choice(options)
 
-  3) Tijeras
+  print('User option =>', user_option)
+  print('Computer option =>', computer_option)
+  return user_option, computer_option
 
-  (Introduce el número de tu elección)
-
-  ''' )
-
-  computer_option = random.choice(["Piedra", "Papel", "Tijeras"])
-
-  if user_option == "1":
-
-    user_option = "Piedra"
-
-    if computer_option == "Tijeras":
-
-      print("El usuario eligió" , user_option)
-
-      print("La computadora eligió" , computer_option)
-
-      print("Felicidades, usted ha ganado!")
-
-    elif computer_option == "Papel":
-
-      print("El usuario eligió" , user_option)
-
-      print("La computadora eligió" , computer_option)
-
-      print("La computadora ha ganado!")
-
+def check_rules(user_option, computer_option, user_wins, computer_wins):
+  if user_option == computer_option:
+    print('Empate!')
+  elif user_option == 'piedra':
+    if computer_option == 'tijera':
+      print('piedra gana a tijera')
+      print('user gano!')
+      user_wins += 1
     else:
-
-      print("Es un empate!")
-
-  elif user_option == "2":
-
-    user_option = "Papel"
-
-    if computer_option == "Piedra":
-
-      print("El usuario eligió" , user_option)
-
-      print("La computadora eligió" , computer_option)
-
-      print("Felicidades, usted ha ganado!")
-
-    elif computer_option == "Tijeras":
-
-      print("El usuario eligió" , user_option)
-
-      print("La computadora eligió" , computer_option)
-
-      print( "La computadora ha ganado!")
-
+      print('Papel gana a piedra')
+      print('computer gano!')
+      computer_wins += 1
+  elif user_option == 'papel':
+    if computer_option == 'piedra':
+      print('papel gana a piedra')
+      print('user gano')
+      user_wins += 1
     else:
-
-      print("Es un empate!")
-
-  elif user_option == "3":
-
-    user_option = "Tijeras"
-
-    if computer_option == "Papel":
-
-      print("El usuario eligió" , user_option)
-
-      print("La computadora eligió" , computer_option)
-
-      print("Felicidades, usted ha ganado!")
-
-    elif computer_option == "Piedra":
-
-      print("El usuario eligió" , user_option)
-
-      print( "La computadora eligió" , computer_option)
-
-      print("La computadora ha ganado!")
-
+      print('tijera gana a papel')
+      print('computer gano!')
+      computer_wins += 1
+  elif user_option == 'tijera':
+    if computer_option == 'papel':
+      print('tijera gana a papel')
+      print('user gano!')
+      user_wins += 1
     else:
+      print('piedra gana a tijera')
+      print('computer gano!')
+      computer_wins += 1
+  return user_wins, computer_wins
 
-      print("Es un empate!")
+def run_game():
+  computer_wins = 0
+  user_wins = 0  
+  rounds = 1
+  while True:
+    print('*' * 10)
+    print('ROUND', rounds)
+    print('*' * 10)
 
-  else:
+    print('computer_wins', computer_wins)
+    print('user_wins', user_wins)
+    rounds += 1
 
-    print("Esa no es una jugada válida!")
+    user_option, computer_option = choose_options()
+    user_wins, computer_wins = check_rules(user_option, computer_option, user_wins, computer_wins)
 
-    print('''
+    if computer_wins == 2:
+      print('El ganador es la computadora')
+      break
 
-    Reiniciando el programa...
+    if user_wins == 2:
+      print('El ganador es el usuario')
+      break
 
-    
-
-    
-
-    ''')
-
-    game_logic()
-
-if __name__ == "__main__":
-
-  game_logic()
+run_game()
